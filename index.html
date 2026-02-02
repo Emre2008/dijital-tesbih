@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- iPhone zoom engelleme -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Dijital Tesbih</title>
+
+    <style>
+        * {
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #0f172a;
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            width: 320px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .count {
+            font-size: 56px;
+            margin: 20px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            font-size: 20px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #lockBtn {
+            background: #64748b;
+            color: white;
+        }
+
+        #zikrBtn {
+            background: #22c55e;
+            color: black;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1 id="zikr">Subhanallah</h1>
+    <div class="count" id="count">0</div>
+
+    <button id="lockBtn" onclick="kilidiDegistir()">🔒 Kilitli</button>
+    <button id="zikrBtn" onclick="arttir()" disabled>Zikri Çek</button>
+</div>
+
+<script>
+    const zikrler = ["Subhanallah", "Elhamdülillah", "Allahu Ekber"];
+    let index = 0;
+    let sayac = 0;
+    let kilitli = true;
+
+    function kilidiDegistir() {
+        kilitli = !kilitli;
+
+        const lockBtn = document.getElementById("lockBtn");
+        const zikrBtn = document.getElementById("zikrBtn");
+
+        if (kilitli) {
+            lockBtn.innerText = "🔒 Kilitli";
+            zikrBtn.disabled = true;
+        } else {
+            lockBtn.innerText = "🔓 Açık";
+            zikrBtn.disabled = false;
+        }
+    }
+
+    function arttir() {
+        sayac++;
+        document.getElementById("count").innerText = sayac;
+
+        if (sayac === 33) {
+            sayac = 0;
+            index++;
+
+            if (index < zikrler.length) {
+                document.getElementById("zikr").innerText = zikrler[index];
+                document.getElementById("count").innerText = 0;
+            } else {
+                document.getElementById("zikr").innerText = "Tesbihat Tamamlandı 🤲";
+                document.getElementById("zikrBtn").disabled = true;
+                document.getElementById("lockBtn").innerText = "🔒 Kilitli";
+                kilitli = true;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
